@@ -19,6 +19,10 @@ package org.fxconnector.details;
 
 import static org.fxconnector.ConnectorUtils.boundsToString;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Set;
 
 import javafx.beans.value.WritableValue;
@@ -37,6 +41,7 @@ import org.fxconnector.StageID;
 import org.fxconnector.details.Detail.LabelType;
 import org.fxconnector.details.Detail.ValueType;
 import org.fxconnector.event.FXConnectorEventDispatcher;
+import org.scenicview.utils.Logger;
 
 /**
  * 
@@ -44,6 +49,7 @@ import org.fxconnector.event.FXConnectorEventDispatcher;
 class NodeDetailPaneInfo extends DetailPaneInfo {
 
     Detail nodeClassName;
+    Detail nodeUserdata;
     Detail pseudoClassStateDetail;
     Detail styleClassDetail;
     Detail managedDetail;
@@ -88,6 +94,7 @@ class NodeDetailPaneInfo extends DetailPaneInfo {
 
     @Override protected void createDetails() {
         nodeClassName = addDetail("className", "className:");
+        nodeUserdata = addDetail("getUserData", "userdata:");
         styleClassDetail = addDetail("styleClass", "styleClass:");
         pseudoClassStateDetail = addDetail(null, "pseudoClassState:");
         visibleDetail = addDetail("visible", "visible:");
@@ -249,8 +256,14 @@ class NodeDetailPaneInfo extends DetailPaneInfo {
         final boolean all = propertyName.equals("*") ? true : false;
 
         final Node node = (Node) getTarget();
+        Logger.print("BPO: HEY");
         if (all && node != null) {
             nodeClassName.setValue(node.getClass().getName());
+            if(node.getUserData() == null) {
+                nodeUserdata.setValue("null");
+            } else {
+                nodeUserdata.setValue(node.getUserData().toString());
+            }
         }
 
         if (node != null) {

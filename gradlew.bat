@@ -21,6 +21,7 @@ set DEFAULT_JVM_OPTS=
 if defined JAVA_HOME goto findJavaFromJavaHome
 
 set JAVA_EXE=java.exe
+set JAVA_EXE="C:/Tools/jdk-11.0.20.1+1/bin/java.exe"
 %JAVA_EXE% -version >NUL 2>&1
 if "%ERRORLEVEL%" == "0" goto init
 
@@ -34,6 +35,7 @@ goto fail
 
 :findJavaFromJavaHome
 set JAVA_HOME=%JAVA_HOME:"=%
+set JAVA_HOME="C:/Tools/jdk-11.0.20.1+1"
 set JAVA_EXE=%JAVA_HOME%/bin/java.exe
 
 if exist "%JAVA_EXE%" goto init
